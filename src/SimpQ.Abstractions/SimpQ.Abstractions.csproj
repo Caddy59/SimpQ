@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+	<PropertyGroup>
+		<PackageId>SimpQ.Abstractions</PackageId>
+		<Product>SimpQ Abstractions</Product>
+		<Description>Provides interfaces and base abstractions for SimpQ.</Description>
+		<PackageTags>$(PackageTags)</PackageTags>
+	</PropertyGroup>
+
+</Project>

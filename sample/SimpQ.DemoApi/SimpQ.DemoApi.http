@@ -1,0 +1,6 @@
+@SimpQ.DemoApi_HostAddress = http://localhost:5242
+
+GET {{SimpQ.DemoApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

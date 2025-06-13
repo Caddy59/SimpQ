@@ -1,0 +1,9 @@
+﻿global using SimpQ.Abstractions.Models.Internal;
+global using SimpQ.Abstractions.Models.Requests;
+global using SimpQ.Abstractions.Models.Results;
+global using SimpQ.Abstractions.Queries;
+global using SimpQ.Abstractions.Reports;
+global using SimpQ.Abstractions.Exceptions;
+global using SimpQ.Core.Helpers;
+global using SimpQ.Core.Queries;
+global using SimpQ.SqlServer.Helpers;

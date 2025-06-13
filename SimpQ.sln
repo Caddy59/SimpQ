@@ -1,0 +1,91 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.34916.146
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{7826643F-D8DC-488E-AF8F-CCB2CA3E5BB7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpQ.Abstractions", "src\SimpQ.Abstractions\SimpQ.Abstractions.csproj", "{FC1EA845-1775-478D-8D42-3384FE91F220}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample", "sample", "{BFD31EB2-3DF3-43DD-9D60-875B30B3479A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpQ.SqlServer", "src\SimpQ.SqlServer\SimpQ.SqlServer.csproj", "{D95BB3F7-B449-43BD-B8A7-08E119182E24}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpQ.Core", "src\SimpQ.Core\SimpQ.Core.csproj", "{39DC7D62-9B9B-4D79-990D-D1010B970355}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpQ.DemoApi", "sample\SimpQ.DemoApi\SimpQ.DemoApi.csproj", "{A9CD4A28-B5D1-4E94-8F18-5CB4E0D0940A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpQ.Core.UnitTests", "test\SimpQ.Core.UnitTests\SimpQ.Core.UnitTests.csproj", "{267739C0-795F-4808-A161-77E1929B772F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpQ.SqlServer.UnitTests", "test\SimpQ.SqlServer.UnitTests\SimpQ.SqlServer.UnitTests.csproj", "{93458009-6325-4576-9B9B-77CF6B1071D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpQ.Abstractions.UnitTests", "test\SimpQ.Abstractions.UnitTests\SimpQ.Abstractions.UnitTests.csproj", "{8A8FD3D4-3153-4209-8B8B-645FA946AFF1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos de la solución", "Elementos de la solución", "{D107F4C8-89CC-BEA8-D3D7-CA6B7733353D}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Build.props = Directory.Build.props
+		Directory.Packages.props = Directory.Packages.props
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpQ.UnitTests.Shared", "test\SimpQ.UnitTests.Shared\SimpQ.UnitTests.Shared.csproj", "{E2906172-3B8D-4DA9-A829-C7EB63337894}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FC1EA845-1775-478D-8D42-3384FE91F220}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC1EA845-1775-478D-8D42-3384FE91F220}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC1EA845-1775-478D-8D42-3384FE91F220}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC1EA845-1775-478D-8D42-3384FE91F220}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D95BB3F7-B449-43BD-B8A7-08E119182E24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D95BB3F7-B449-43BD-B8A7-08E119182E24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D95BB3F7-B449-43BD-B8A7-08E119182E24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D95BB3F7-B449-43BD-B8A7-08E119182E24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39DC7D62-9B9B-4D79-990D-D1010B970355}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39DC7D62-9B9B-4D79-990D-D1010B970355}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39DC7D62-9B9B-4D79-990D-D1010B970355}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39DC7D62-9B9B-4D79-990D-D1010B970355}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9CD4A28-B5D1-4E94-8F18-5CB4E0D0940A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9CD4A28-B5D1-4E94-8F18-5CB4E0D0940A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9CD4A28-B5D1-4E94-8F18-5CB4E0D0940A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9CD4A28-B5D1-4E94-8F18-5CB4E0D0940A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{267739C0-795F-4808-A161-77E1929B772F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{267739C0-795F-4808-A161-77E1929B772F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{267739C0-795F-4808-A161-77E1929B772F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{267739C0-795F-4808-A161-77E1929B772F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93458009-6325-4576-9B9B-77CF6B1071D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93458009-6325-4576-9B9B-77CF6B1071D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93458009-6325-4576-9B9B-77CF6B1071D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93458009-6325-4576-9B9B-77CF6B1071D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A8FD3D4-3153-4209-8B8B-645FA946AFF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A8FD3D4-3153-4209-8B8B-645FA946AFF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A8FD3D4-3153-4209-8B8B-645FA946AFF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A8FD3D4-3153-4209-8B8B-645FA946AFF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2906172-3B8D-4DA9-A829-C7EB63337894}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2906172-3B8D-4DA9-A829-C7EB63337894}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2906172-3B8D-4DA9-A829-C7EB63337894}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2906172-3B8D-4DA9-A829-C7EB63337894}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FC1EA845-1775-478D-8D42-3384FE91F220} = {7826643F-D8DC-488E-AF8F-CCB2CA3E5BB7}
+		{D95BB3F7-B449-43BD-B8A7-08E119182E24} = {7826643F-D8DC-488E-AF8F-CCB2CA3E5BB7}
+		{39DC7D62-9B9B-4D79-990D-D1010B970355} = {7826643F-D8DC-488E-AF8F-CCB2CA3E5BB7}
+		{A9CD4A28-B5D1-4E94-8F18-5CB4E0D0940A} = {BFD31EB2-3DF3-43DD-9D60-875B30B3479A}
+		{267739C0-795F-4808-A161-77E1929B772F} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{93458009-6325-4576-9B9B-77CF6B1071D5} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{8A8FD3D4-3153-4209-8B8B-645FA946AFF1} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{E2906172-3B8D-4DA9-A829-C7EB63337894} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {297C84C7-48B1-4A91-88D9-9C5759F2980E}
+	EndGlobalSection
+EndGlobal
