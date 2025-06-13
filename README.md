@@ -52,11 +52,11 @@ builder.Services.AddControllers().AddJsonOptions(opt => {
 Optionally, you can customize SimpQ's behavior — such as the maximum filter nesting level — by configuring the `SimpQOptions` class using either configuration binding or direct code-based setup:
 
 ```csharp
-builder.Services.Configure<SimpQ.Core.Options.SimpQOptions>(
+builder.Services.Configure<SimpQOptions>(
     builder.Configuration.GetSection("SimpQ"));
 ```
 
-> The default value of `MaxFilterNestingLevel` is 2. You can increase this limit if your application needs to support more deeply nested filter conditions.
+> The default value of `MaxFilterNestingLevel` is **2**. You can increase this limit if your application needs to support more deeply nested filter conditions.
 
 #### 3. Define and Annotate Your Data Model
 
@@ -175,3 +175,7 @@ SimpQ supports rich, structured JSON input for building dynamic filters. Below i
 
 > Ensure that all fields used in `filters` are annotated with `[AllowedToFilter]` in your model.
 > Likewise, fields used in `order` must be annotated with `[AllowedToOrder]`.
+
+## Special Thanks
+
+- [Jacobo Requena](https://github.com/jrequenag) for his suggestions, ideas and support in this project.
