@@ -75,6 +75,7 @@ Here’s a full example:
 public class Invoice : IReportEntity {
     [Column((int)SqlDbType.Int, name: "TransactionId")]
     [KeysetPaginationKey]
+    [DefaultOrder]
     [AllowedToFilter]
     [AllowedToOrder]
     public int Id { get; set; }
@@ -98,6 +99,8 @@ public class Invoice : IReportEntity {
     public decimal Price { get; set; }
 }
 ```
+
+> You can use both types of pagination in the same model.
 
 #### 4. Use SimpQ in Your API
 
@@ -159,16 +162,11 @@ SimpQ supports rich, structured JSON input for building dynamic filters. Below i
           { "field": "CashierName", "operator": "equals", "value": "Alice" }
         ]
       },
-      {
-        "field": "CashierName", "operator": "equals", "value": "Bob"
-      }
+      { "field": "CashierName", "operator": "equals", "value": "Bob" }
     ]
   },
   "order": [
-    {
-	  "field": "CashierName",
-	  "direction": "desc"
-    }
+    { "field": "CashierName", "direction": "desc" }
   ],
   "page": 1,
   "pageSize": 10000
