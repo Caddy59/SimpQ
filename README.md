@@ -9,7 +9,7 @@ This project was created to offer a simple and effective way to filter data in .
 - JSON-based query input model
 - Offset-based pagination support
 - Keyset-based pagination support
-- SQL Server support with extensibility
+- SQL Server support, with extensibility to other relational databases
 
 ## Getting Started
 
@@ -48,6 +48,15 @@ builder.Services.AddControllers().AddJsonOptions(opt => {
     opt.JsonSerializerOptions.Converters.Add(new SimpQFilterJsonConverter());
 });
 ```
+
+Optionally, you can customize SimpQ's behavior — such as the maximum filter nesting level — by configuring the `SimpQOptions` class using either configuration binding or direct code-based setup:
+
+```csharp
+builder.Services.Configure<SimpQ.Core.Options.SimpQOptions>(
+    builder.Configuration.GetSection("SimpQ"));
+```
+
+> The default value of `MaxFilterNestingLevel` is 2. You can increase this limit if your application needs to support more deeply nested filter conditions.
 
 #### 3. Define and Annotate Your Data Model
 
