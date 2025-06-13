@@ -19,7 +19,7 @@ public class WhereOperatorHandlerResolverTests {
     }
 
     [Fact]
-    public void Resolve_ShouldThrowInvalidOperatorException_WhenNoHandlerSupportsOperator() {
+    public void Resolve_ShouldThrowNotSupportedException_WhenNoHandlerSupportsOperator() {
         // Arrange
         var mockHandler = new Mock<IWhereOperatorHandler>();
         mockHandler.Setup(h => h.CanHandle("invalid")).Returns(false);
@@ -27,6 +27,6 @@ public class WhereOperatorHandlerResolverTests {
         var resolver = new WhereOperatorHandlerResolver([mockHandler.Object]);
 
         // Act & Assert
-        Assert.Throws<InvalidOperatorException>(() => resolver.Resolve("invalid"));
+        Assert.Throws<NotSupportedException>(() => resolver.Resolve("invalid"));
     }
 }

@@ -5,6 +5,16 @@
 /// </summary>
 public class InvalidColumException : Exception {
     /// <summary>
+    /// Gets the name of the invalid column that caused the exception.
+    /// </summary>
+    public string? Column { get; private init; }
+
+    /// <summary>
+    /// Gets the clause where the invalid column was used (e.g., "select", "where", "order").
+    /// </summary>
+    public string? Clause { get; private init; }
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="InvalidColumException"/> class
     /// with a generated message that includes the invalid column and the clause it was found in.
     /// </summary>
@@ -12,6 +22,8 @@ public class InvalidColumException : Exception {
     /// <param name="clause">The clause where the column was used (e.g., select, where, order).</param>
     public InvalidColumException(string column, string clause)
         : base($"Invalid column in {clause} clause: '{column}'.") {
+        Column = column;
+        Clause = clause;
     }
 
     /// <summary>

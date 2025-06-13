@@ -19,7 +19,7 @@ public class WhereOperatorHandlerResolver(IEnumerable<IWhereOperatorHandler> han
     public IWhereOperatorHandler Resolve(string @operator) {
         var handler = handlers.FirstOrDefault(h => h.CanHandle(@operator));
         if (handler is null)
-            throw new InvalidOperatorException(@operator, "filter");
+            throw new NotSupportedException($"Comparison operator '{@operator}' is not supported.");
         return handler;
     }
 }
