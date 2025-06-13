@@ -13,9 +13,9 @@ This project was created to offer a simple and effective way to filter data in .
 
 ## Getting Started
 
-# Installation
+### Installation
 
-## 1. Add the NuGet Package
+#### 1. Add the NuGet Package
 
 Install **SimpQ** using the .NET CLI:
 
@@ -31,7 +31,7 @@ Or via the NuGet Package Manager in Visual Studio:
 
 > SimpQ targets **.NET 9**.
 
-## 2. Register Services
+#### 2. Register Services
 
 In your `Program.cs`, configure **SimpQ** by registering its services in the dependency injection container.
 
@@ -49,7 +49,7 @@ builder.Services.AddControllers().AddJsonOptions(opt => {
 });
 ```
 
-## 3. Define and Annotate Your Data Model
+#### 3. Define and Annotate Your Data Model
 
 Your model class must implement the `IReportEntity` interface to be used with SimpQ.
 
@@ -63,8 +63,7 @@ Use attributes to:
 Here’s a full example:
 
 ```csharp
-public class Invoice : IReportEntity
-{
+public class Invoice : IReportEntity {
     [Column((int)SqlDbType.Int, name: "TransactionId")]
     [KeysetPaginationKey]
     [AllowedToFilter]
@@ -91,7 +90,7 @@ public class Invoice : IReportEntity
 }
 ```
 
-## 4. Use SimpQ in Your API
+#### 4. Use SimpQ in Your API
 
 To execute queries using SimpQ, inject the `IReportQueryRaw` service into your controller and use either **offset-based** or **keyset-based** pagination depending on your scenario.
 
@@ -135,7 +134,7 @@ public class InvoiceController(IReportQueryRaw reportQueryRaw) : ControllerBase 
 
 > You must ensure the SQL columns names and types match the model's [Column] attributes — otherwise, the mapping will fail at runtime.
 
-## 5. Sample JSON Request
+#### 5. Sample JSON Request
 
 SimpQ supports rich, structured JSON input for building dynamic filters. Below is an example using **offset pagination** and a **deeply nested filter expression** with logical OR conditions.
 
