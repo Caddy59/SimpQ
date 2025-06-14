@@ -1,6 +1,4 @@
-﻿using SimpQ.Abstractions.Enums;
-
-namespace SimpQ.Abstractions.Attributes.Entities;
+﻿namespace SimpQ.Abstractions.Attributes.Entities;
 
 /// <summary>
 /// Identifies a property to be used as a key in keyset pagination logic.
