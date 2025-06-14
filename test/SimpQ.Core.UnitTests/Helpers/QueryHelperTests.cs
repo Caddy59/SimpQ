@@ -13,7 +13,7 @@ public class QueryHelperTests {
         Assert.Equal(3, result.Count);
         Assert.Contains(result, c => c.Name == "Id" && c.PropertyName == "Id" && c.PropertyType == typeof(int) && c.DbType == 1);
         Assert.Contains(result, c => c.Name == "FullName" && c.PropertyName == "Name" && c.PropertyType == typeof(string) && c.DbType == 2);
-        Assert.Contains(result, c => c.Name == "Age" && c.PropertyName == "Age" && c.PropertyType == typeof(int) && c.DbType == 3);
+        Assert.Contains(result, c => c.Name == "Age" && c.PropertyName == "Age" && c.PropertyType == typeof(int?) && c.DbType == 3);
     }
 
     [Fact]

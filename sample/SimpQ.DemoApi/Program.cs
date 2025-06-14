@@ -1,3 +1,4 @@
+using SimpQ.Core.Options;
 using SimpQ.Core.Serialization;
 using SimpQ.SqlServer.Extensions;
 
@@ -13,8 +14,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSimpQSqlServer(connectionString);
 
-/*builder.Services.Configure<SimpQ.Core.Options.SimpQOptions>(
-    builder.Configuration.GetSection("SimpQ"));*/
+builder.Services.Configure<SimpQOptions>(
+    builder.Configuration.GetSection("SimpQ"));
 
 var app = builder.Build();
 

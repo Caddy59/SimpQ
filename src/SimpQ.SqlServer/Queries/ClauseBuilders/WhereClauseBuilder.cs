@@ -109,7 +109,7 @@ public class WhereClauseBuilder(IOptions<SimpQOptions> options, ValidOperator va
             throw new InvalidOperationException($"Maximum filter nesting level exceeded (maximum level: {_maxNestingLevel}).");
 
         if (!SqlServerAllowedOperator.LogicalOperators.TryGetValue(group.Logic, out var sqlLogic))
-            throw new InvalidOperatorException(group.Logic, "logic");
+            throw new InvalidOperatorException(group.Logic, "logical");
 
         var clauses = new List<string>();
 
@@ -141,7 +141,7 @@ public class WhereClauseBuilder(IOptions<SimpQOptions> options, ValidOperator va
                 ?? throw new InvalidColumException(condition.Field, "filter");
 
             if (!validOperator.IsOperatorValidForType(column.PropertyType, condition.Operator))
-                throw new InvalidOperatorException(condition.Operator, column.PropertyName, column.PropertyType, validOperator.GetOperatorsForType(column.PropertyType));
+                throw new InvalidOperatorException(condition.Operator, "comparison", column.PropertyName, column.PropertyType, validOperator.GetOperatorsForType(column.PropertyType));
 
             var handler = handlerResolver.Resolve(condition.Operator);
             return handler.BuildClause(column.Name, column.DbType, condition.Operator, JsonSerializer.SerializeToElement(condition.Value), parameterContext);

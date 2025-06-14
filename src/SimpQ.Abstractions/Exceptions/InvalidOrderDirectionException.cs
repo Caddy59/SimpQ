@@ -5,6 +5,16 @@
 /// </summary>
 public class InvalidOrderDirectionException : Exception {
     /// <summary>
+    /// Gets the name of the invalid column that caused the exception.
+    /// </summary>
+    public string? Column { get; private init; }
+
+    /// <summary>
+    /// Gets the invalid sort direction that was specified.
+    /// </summary>
+    public string? Direction { get; private init; }
+
+    /// <summary>
     /// Initializes a new instance of the <see cref="InvalidOrderDirectionException"/> class
     /// with a message indicating the invalid direction used for the specified column.
     /// </summary>
@@ -12,6 +22,8 @@ public class InvalidOrderDirectionException : Exception {
     /// <param name="direction">The invalid sort direction provided (e.g., "ascending").</param>
     public InvalidOrderDirectionException(string column, string direction)
         : base($"Invalid direction for column {column} in order clause: '{direction}'.") {
+        Column = column;
+        Direction = direction;
     }
 
     /// <summary>

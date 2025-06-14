@@ -7,6 +7,7 @@ namespace SimpQ.DemoApi.ReportEntities;
 public class Invoice : IReportEntity {
     [Column((int)SqlDbType.Int, name: "TransactionId")]
     [KeysetPaginationKey]
+    [DefaultOrder]
     [AllowedToFilter]
     [AllowedToOrder]
     public int Id { get; set; }

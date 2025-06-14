@@ -1,7 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Logging;
 using System.Collections.ObjectModel;
-using System.Text.Json;
 
 namespace SimpQ.SqlServer.Reports;
 
