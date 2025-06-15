@@ -1,6 +1,7 @@
 using SimpQ.Core.Options;
 using SimpQ.Core.Serialization;
 using SimpQ.SqlServer.Extensions;
+using System.Runtime.InteropServices;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("SimpQDb");
@@ -27,5 +28,7 @@ if (app.Environment.IsDevelopment()) {
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
+
+Console.WriteLine("Running on framework {0}", RuntimeInformation.FrameworkDescription);
 
 await app.RunAsync();
