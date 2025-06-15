@@ -29,7 +29,7 @@ Or via the NuGet Package Manager in Visual Studio:
 2.  **Search for** `SimpQ.SqlServer`.  
 3.  Click **Install**.
 
-> SimpQ targets **.NET 9**.
+> ✅ SimpQ supports **.NET 8** and **.NET 9**.
 
 #### 2. Register Services
 
