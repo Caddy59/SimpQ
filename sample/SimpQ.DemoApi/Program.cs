@@ -1,6 +1,8 @@
 using SimpQ.Core.Options;
 using SimpQ.Core.Serialization;
+using SimpQ.Core.Extensions;
 using SimpQ.SqlServer.Extensions;
+using SimpQ.DemoApi.Configuration;
 using System.Runtime.InteropServices;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +19,11 @@ builder.Services.AddSimpQSqlServer(connectionString);
 
 builder.Services.Configure<SimpQOptions>(
     builder.Configuration.GetSection("SimpQ"));
+
+builder.Services.AddEntityConfiguration(config => {
+    config.ApplyConfiguration(new InvoiceConfiguration())
+          .ApplyConfiguration(new InvoiceFluentOnlyConfiguration());
+});
 
 var app = builder.Build();
 
