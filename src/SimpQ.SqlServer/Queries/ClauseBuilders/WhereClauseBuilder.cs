@@ -71,7 +71,7 @@ public class WhereClauseBuilder(IOptions<SimpQOptions> options, ValidOperator va
     /// <returns>A <see cref="WhereClause"/> containing the SQL and parameters.</returns>
     /// <exception cref="InvalidOperationException">Thrown if keyset columns are also used in the filter group.</exception>
     private WhereClause GetKeysetClause<TEntity>(FilterGroup? filterGroup, KeysetFilter keysetFilter) where TEntity : IReportEntity {
-        var keysetColumns = QueryHelperExtensions.GetOrderedKeysetColumns<TEntity>(configurationRegistry)
+        var keysetColumns = QueryHelper.GetOrderedKeysetColumns<TEntity>(configurationRegistry)
             .Select(c => c.PropertyName)
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
@@ -134,7 +134,7 @@ public class WhereClauseBuilder(IOptions<SimpQOptions> options, ValidOperator va
     /// <param name="level">Current nesting level for validation.</param>
     /// <returns>A valid SQL condition string or empty.</returns>
     private string BuildClause<TEntity>(IFilter filter, ParameterContext parameterContext, int level) where TEntity : IReportEntity {
-        var allowedFilters = QueryHelperExtensions.GetAllowedColumnsToFilter<TEntity>(configurationRegistry);
+        var allowedFilters = QueryHelper.GetAllowedColumnsToFilter<TEntity>(configurationRegistry);
 
         if (filter is FilterGroup subgroup)
             return $"({BuildClauseGroup<TEntity>(subgroup, parameterContext, level + 1)})";
@@ -166,7 +166,7 @@ public class WhereClauseBuilder(IOptions<SimpQOptions> options, ValidOperator va
             return string.Empty;
 
         var @operator = keysetFilter.IsDescending ? simpQOperator.LessThan : simpQOperator.GreaterThan;
-        var columns = QueryHelperExtensions.GetOrderedKeysetColumns<TEntity>(configurationRegistry);
+        var columns = QueryHelper.GetOrderedKeysetColumns<TEntity>(configurationRegistry);
         var conditions = new List<string>();
 
         for (var i = 0; i < columns.Count; i++) {

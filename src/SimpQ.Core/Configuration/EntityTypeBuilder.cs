@@ -9,7 +9,7 @@ namespace SimpQ.Core.Configuration;
 /// </summary>
 /// <typeparam name="TEntity">The entity type to configure.</typeparam>
 public class EntityTypeBuilder<TEntity> where TEntity : class, IReportEntity {
-    private readonly Dictionary<string, PropertyConfiguration> _properties = new();
+    private readonly Dictionary<string, PropertyConfiguration> _properties = [];
 
     /// <summary>
     /// Configures a property of the entity using a fluent API.

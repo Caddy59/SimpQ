@@ -19,7 +19,7 @@ internal static class EntityHelper {
     /// <param name="configurationRegistry">Optional configuration registry for fluent configurations.</param>
     /// <returns>An instance of <typeparamref name="TEntity"/> populated with values from the current row.</returns>
     internal static TEntity GetEntity<TEntity>(this IDataReader dataReader, EntityConfigurationRegistry? configurationRegistry = null) where TEntity : IReportEntity, new() {
-        var columns = QueryHelperExtensions.GetColumns<TEntity>(configurationRegistry);
+        var columns = QueryHelper.GetColumns<TEntity>(configurationRegistry);
         var entity = new TEntity();
         var entityType = typeof(TEntity);
 

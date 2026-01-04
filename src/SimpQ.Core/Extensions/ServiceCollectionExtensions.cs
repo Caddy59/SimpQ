@@ -16,7 +16,17 @@ public static class ServiceCollectionExtensions {
     /// <param name="configureAction">Optional action to configure entity types.</param>
     /// <returns>The service collection for method chaining.</returns>
     public static IServiceCollection AddEntityConfiguration(this IServiceCollection services, Action<EntityConfigurationBuilder>? configureAction = null) {
-        services.AddSingleton<EntityConfigurationRegistry>();
+        services.AddSingleton<EntityConfigurationRegistry>(provider => {
+            var registry = new EntityConfigurationRegistry();
+            
+            // Apply all registered configuration actions
+            var configActions = provider.GetServices<Action<EntityConfigurationRegistry>>();
+            foreach (var action in configActions) {
+                action(registry);
+            }
+            
+            return registry;
+        });
         
         if (configureAction is not null) {
             var builder = new EntityConfigurationBuilder(services);
@@ -32,13 +42,8 @@ public static class ServiceCollectionExtensions {
     /// <param name="services">The service collection.</param>
     /// <param name="assembly">The assembly to scan for entity configurations.</param>
     /// <returns>The service collection for method chaining.</returns>
-    public static IServiceCollection AddEntityConfigurationsFromAssembly(this IServiceCollection services, Assembly assembly) {
-        var registry = services.BuildServiceProvider().GetService<EntityConfigurationRegistry>()
-            ?? throw new InvalidOperationException("EntityConfigurationRegistry not registered. Call AddEntityConfiguration first.");
-
-        registry.RegisterFromAssembly(assembly);
-        return services;
-    }
+    public static IServiceCollection AddEntityConfigurationsFromAssembly(this IServiceCollection services, Assembly assembly) =>
+        services.AddEntityConfiguration(builder => builder.ApplyConfigurationsFromAssembly(assembly));
 
     /// <summary>
     /// Registers entity configurations from the calling assembly.
@@ -52,13 +57,7 @@ public static class ServiceCollectionExtensions {
 /// <summary>
 /// Builder for configuring entity types.
 /// </summary>
-public class EntityConfigurationBuilder {
-    private readonly IServiceCollection _services;
-
-    internal EntityConfigurationBuilder(IServiceCollection services)
-    {
-        _services = services;
-    }
+public class EntityConfigurationBuilder(IServiceCollection services) {
 
     /// <summary>
     /// Applies configuration for an entity type.
@@ -68,11 +67,8 @@ public class EntityConfigurationBuilder {
     /// <returns>The builder for method chaining.</returns>
     public EntityConfigurationBuilder ApplyConfiguration<TEntity>(IEntityTypeConfiguration<TEntity> configuration) 
         where TEntity : class, IReportEntity {
-        _services.AddSingleton(configuration);
-        _services.AddSingleton<Func<EntityConfigurationRegistry, EntityConfigurationRegistry>>(provider => registry => {
-            registry.Register(configuration);
-            return registry;
-        });
+        services.AddSingleton(configuration);
+        services.AddSingleton<Action<EntityConfigurationRegistry>>(registry => registry.Register(configuration));
         return this;
     }
 
@@ -82,10 +78,7 @@ public class EntityConfigurationBuilder {
     /// <param name="assembly">The assembly to scan for configurations.</param>
     /// <returns>The builder for method chaining.</returns>
     public EntityConfigurationBuilder ApplyConfigurationsFromAssembly(Assembly assembly) {
-        _services.AddSingleton<Func<EntityConfigurationRegistry, EntityConfigurationRegistry>>(provider => registry => {
-            registry.RegisterFromAssembly(assembly);
-            return registry;
-        });
+        services.AddSingleton<Action<EntityConfigurationRegistry>>(registry => registry.RegisterFromAssembly(assembly));
         return this;
     }
 }

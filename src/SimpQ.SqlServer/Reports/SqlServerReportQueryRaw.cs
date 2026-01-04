@@ -162,7 +162,7 @@ public class SqlServerReportQueryRaw(ILogger<SqlServerReportQueryRaw> logger, st
         if (entities.Count == 0)
             return default;
 
-        var keysetProperties = QueryHelperExtensions.GetOrderedKeysetProperties<TEntity>(configurationRegistry);
+        var keysetProperties = QueryHelper.GetOrderedKeysetProperties<TEntity>(configurationRegistry);
         var entity = entities.Last();
         var next = new Dictionary<string, object?>();
 

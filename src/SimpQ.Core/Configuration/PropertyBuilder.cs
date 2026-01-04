@@ -7,14 +7,7 @@ namespace SimpQ.Core.Configuration;
 /// </summary>
 /// <typeparam name="TEntity">The entity type.</typeparam>
 /// <typeparam name="TProperty">The property type.</typeparam>
-public class PropertyBuilder<TEntity, TProperty> {
-    private readonly PropertyConfiguration _configuration;
-    private readonly string _propertyName;
-
-    internal PropertyBuilder(PropertyConfiguration configuration, string propertyName) {
-        _configuration = configuration;
-        _propertyName = propertyName;
-    }
+public class PropertyBuilder<TEntity, TProperty>(PropertyConfiguration configuration, string propertyName) {
 
     /// <summary>
     /// Configures the database type and optional column name for the property.
@@ -23,8 +16,8 @@ public class PropertyBuilder<TEntity, TProperty> {
     /// <param name="columnName">The optional column name. If not provided, the property name will be used.</param>
     /// <returns>The property builder for method chaining.</returns>
     public PropertyBuilder<TEntity, TProperty> HasColumn(int dbType, string? columnName = null) {
-        _configuration.DbType = dbType;
-        _configuration.ColumnName = columnName ?? _propertyName;
+        configuration.DbType = dbType;
+        configuration.ColumnName = columnName ?? propertyName;
         return this;
     }
 
@@ -33,7 +26,7 @@ public class PropertyBuilder<TEntity, TProperty> {
     /// </summary>
     /// <returns>The property builder for method chaining.</returns>
     public PropertyBuilder<TEntity, TProperty> AllowedToFilter() {
-        _configuration.AllowedToFilter = true;
+        configuration.AllowedToFilter = true;
         return this;
     }
 
@@ -42,7 +35,7 @@ public class PropertyBuilder<TEntity, TProperty> {
     /// </summary>
     /// <returns>The property builder for method chaining.</returns>
     public PropertyBuilder<TEntity, TProperty> AllowedToOrder() {
-        _configuration.AllowedToOrder = true;
+        configuration.AllowedToOrder = true;
         return this;
     }
 
@@ -52,8 +45,8 @@ public class PropertyBuilder<TEntity, TProperty> {
     /// <param name="priority">The priority for ordering keyset keys (lower values are evaluated first). Default is 0.</param>
     /// <returns>The property builder for method chaining.</returns>
     public PropertyBuilder<TEntity, TProperty> IsKeysetPaginationKey(int priority = 0) {
-        _configuration.IsKeysetPaginationKey = true;
-        _configuration.KeysetPaginationPriority = priority;
+        configuration.IsKeysetPaginationKey = true;
+        configuration.KeysetPaginationPriority = priority;
         return this;
     }
 
@@ -64,9 +57,9 @@ public class PropertyBuilder<TEntity, TProperty> {
     /// <param name="direction">The direction of the order (ascending or descending). Default is ascending.</param>
     /// <returns>The property builder for method chaining.</returns>
     public PropertyBuilder<TEntity, TProperty> HasDefaultOrder(int priority = 0, OrderDirection direction = OrderDirection.Ascending) {
-        _configuration.IsDefaultOrder = true;
-        _configuration.DefaultOrderPriority = priority;
-        _configuration.DefaultOrderDirection = direction;
+        configuration.IsDefaultOrder = true;
+        configuration.DefaultOrderPriority = priority;
+        configuration.DefaultOrderDirection = direction;
         return this;
     }
 }

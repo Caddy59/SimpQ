@@ -38,7 +38,7 @@ internal static class SelectClauseBuilder {
     /// Thrown when a field in <paramref name="select"/> is not decorated with <see cref="ColumnAttribute"/> or is not allowed.
     /// </exception>
     private static string GetSentence<TEntity>(IReadOnlyCollection<Select>? select, EntityConfigurationRegistry? configurationRegistry = null) where TEntity : IReportEntity {
-        var allowedColumns = QueryHelperExtensions.GetColumns<TEntity>(configurationRegistry);
+        var allowedColumns = QueryHelper.GetColumns<TEntity>(configurationRegistry);
 
         if (select is null || select.Count == 0) {
             var allColumns = allowedColumns
