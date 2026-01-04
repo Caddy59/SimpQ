@@ -1,6 +1,8 @@
 ﻿using Microsoft.Data.SqlClient;
 using System.Data;
 using System.Globalization;
+using SimpQ.Core.Configuration;
+using SimpQ.Core.Helpers;
 
 namespace SimpQ.SqlServer.Helpers;
 
@@ -14,9 +16,10 @@ internal static class EntityHelper {
     /// </summary>
     /// <typeparam name="TEntity">The target entity type. Must implement <see cref="IReportEntity"/> and have a parameterless constructor.</typeparam>
     /// <param name="dataReader">The <see cref="IDataReader"/> containing the query result.</param>
+    /// <param name="configurationRegistry">Optional configuration registry for fluent configurations.</param>
     /// <returns>An instance of <typeparamref name="TEntity"/> populated with values from the current row.</returns>
-    internal static TEntity GetEntity<TEntity>(this IDataReader dataReader) where TEntity : IReportEntity, new() {
-        var columns = QueryHelper.GetColumns<TEntity>();
+    internal static TEntity GetEntity<TEntity>(this IDataReader dataReader, EntityConfigurationRegistry? configurationRegistry = null) where TEntity : IReportEntity, new() {
+        var columns = QueryHelperExtensions.GetColumns<TEntity>(configurationRegistry);
         var entity = new TEntity();
         var entityType = typeof(TEntity);
 

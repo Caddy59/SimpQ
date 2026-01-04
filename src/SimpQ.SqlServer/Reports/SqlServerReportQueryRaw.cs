@@ -1,6 +1,8 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Logging;
 using System.Collections.ObjectModel;
+using SimpQ.Core.Configuration;
+using SimpQ.Core.Helpers;
 
 namespace SimpQ.SqlServer.Reports;
 
@@ -11,7 +13,8 @@ namespace SimpQ.SqlServer.Reports;
 /// <param name="logger">The logger used for tracing generated SQL queries.</param>
 /// <param name="connectionString">The SQL Server connection string used to establish the database connection.</param>
 /// <param name="queryBuilder">The query definition factory responsible for building SQL commands and parameters.</param>
-public class SqlServerReportQueryRaw(ILogger<SqlServerReportQueryRaw> logger, string connectionString, IQueryDefinitionFactory queryBuilder) : IReportQueryRaw {
+/// <param name="configurationRegistry">Optional configuration registry for fluent configurations.</param>
+public class SqlServerReportQueryRaw(ILogger<SqlServerReportQueryRaw> logger, string connectionString, IQueryDefinitionFactory queryBuilder, EntityConfigurationRegistry? configurationRegistry = null) : IReportQueryRaw {
     /// <inheritdoc/>
     public async Task<QueryResult<TEntity>> ExecuteQueryAsync<TEntity>(string rawQuery, QueryParams queryParams, int timeout = 30000, CancellationToken cancellationToken = default) where TEntity : IReportEntity, new() =>
         await ExecuteQueryAsync<TEntity>(rawQuery, string.Empty, queryParams, timeout, cancellationToken);
@@ -72,7 +75,7 @@ public class SqlServerReportQueryRaw(ILogger<SqlServerReportQueryRaw> logger, st
         if (hasMore)
             entities = [.. entities.Take(entities.Count - 1)];
 
-        var next = GetNext(entities);
+        var next = GetNext(entities, configurationRegistry);
 
         return new() {
             Data = entities,
@@ -110,7 +113,7 @@ public class SqlServerReportQueryRaw(ILogger<SqlServerReportQueryRaw> logger, st
             using var dataReader = await command.ExecuteReaderAsync(cancellationToken);
             if(dataReader is not null && dataReader.HasRows) {
                 while(await dataReader.ReadAsync(cancellationToken)) {
-                    var entity = dataReader.GetEntity<TEntity>();
+                    var entity = dataReader.GetEntity<TEntity>(configurationRegistry);
                     entities.Add(entity);
                 }
             }
@@ -150,15 +153,16 @@ public class SqlServerReportQueryRaw(ILogger<SqlServerReportQueryRaw> logger, st
     /// The type of the entity returned by the query. Must implement <see cref="IReportEntity"/> and have a parameterless constructor.
     /// </typeparam>
     /// <param name="entities">The collection of entities returned from the current query execution.</param>
+    /// <param name="configurationRegistry">Optional configuration registry for fluent configurations.</param>
     /// <returns>
     /// A read-only dictionary containing the property names and values used as the keyset cursor,
     /// or <c>null</c> if the input collection is empty.
     /// </returns>
-    private static ReadOnlyDictionary<string, object?>? GetNext<TEntity>(IReadOnlyCollection<TEntity> entities) where TEntity : IReportEntity, new() {
+    private static ReadOnlyDictionary<string, object?>? GetNext<TEntity>(IReadOnlyCollection<TEntity> entities, EntityConfigurationRegistry? configurationRegistry = null) where TEntity : IReportEntity, new() {
         if (entities.Count == 0)
             return default;
 
-        var keysetProperties = QueryHelper.GetOrderedKeysetProperties<TEntity>();
+        var keysetProperties = QueryHelperExtensions.GetOrderedKeysetProperties<TEntity>(configurationRegistry);
         var entity = entities.Last();
         var next = new Dictionary<string, object?>();
 

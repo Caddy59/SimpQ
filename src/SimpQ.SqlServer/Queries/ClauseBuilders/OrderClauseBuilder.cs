@@ -1,5 +1,7 @@
 ﻿using SimpQ.Abstractions.Attributes.Entities;
 using SimpQ.Abstractions.Enums;
+using SimpQ.Core.Configuration;
+using SimpQ.Core.Helpers;
 
 namespace SimpQ.SqlServer.Queries.ClauseBuilders;
 
@@ -9,7 +11,8 @@ namespace SimpQ.SqlServer.Queries.ClauseBuilders;
 /// <param name="sqlServerQueryOperator">
 /// An instance of <see cref="SqlServerQueryOperator"/> used to resolve SQL ordering directions.
 /// </param>
-public class OrderClauseBuilder(SqlServerQueryOperator sqlServerQueryOperator)  {
+/// <param name="configurationRegistry">Optional configuration registry for fluent configurations.</param>
+public class OrderClauseBuilder(SqlServerQueryOperator sqlServerQueryOperator, EntityConfigurationRegistry? configurationRegistry = null)  {
     private const string Separator = ",";
 
     /// <summary>
@@ -40,7 +43,7 @@ public class OrderClauseBuilder(SqlServerQueryOperator sqlServerQueryOperator)  
     /// <param name="isKeysetPagination">Indicates if this is part of a keyset pagination scenario (optiomal). Default is <c>false</c>.</param>
     /// <returns>Formatted <c>ORDER BY</c> fragment or default ordering when applicable.</returns>
     private string GetColumns<TEntity>(IReadOnlyCollection<Order>? order, bool isKeysetPagination = false) where TEntity : IReportEntity, new() {
-        var allowedColumns = QueryHelper.GetAllowedColumnsToOrder<TEntity>();
+        var allowedColumns = QueryHelperExtensions.GetAllowedColumnsToOrder<TEntity>(configurationRegistry);
         var useDefaultOrder = order is null || order.Count == 0;
         
         if (useDefaultOrder && !isKeysetPagination)
@@ -75,7 +78,7 @@ public class OrderClauseBuilder(SqlServerQueryOperator sqlServerQueryOperator)  
     /// Thrown if any keyset pagination column is also present in <paramref name="order"/>.
     /// </exception>
     private string GetKeysetOrderClause<TEntity>(IReadOnlyCollection<Order>? order, bool isDescending) where TEntity : IReportEntity, new() {
-        var keysetColumns = QueryHelper.GetOrderedKeysetColumns<TEntity>();
+        var keysetColumns = QueryHelperExtensions.GetOrderedKeysetColumns<TEntity>(configurationRegistry);
         var keysetDirection = isDescending ? OrderDirection.Descending : OrderDirection.Ascending;
 
         if (order is not null && order.Count > 0) {
@@ -107,7 +110,7 @@ public class OrderClauseBuilder(SqlServerQueryOperator sqlServerQueryOperator)  
     /// <typeparam name="TEntity">The type defining the default order strategy.</typeparam>
     /// <returns>A formatted default <c>ORDER BY</c> clause.</returns>
     private string GetDefaultOrderClause<TEntity>() where TEntity : IReportEntity, new() {
-        var defaultOrders = QueryHelper.GetDefaultColumnsToOrder<TEntity>();
+        var defaultOrders = QueryHelperExtensions.GetDefaultColumnsToOrder<TEntity>(configurationRegistry);
 
         var formattedOrder = defaultOrders
             .OrderBy(c => c.Priority)

@@ -4,6 +4,8 @@ using SimpQ.Core.Options;
 using SimpQ.SqlServer.Models;
 using SimpQ.SqlServer.Queries.OperatorHandlers;
 using System.Text.Json;
+using SimpQ.Core.Configuration;
+using SimpQ.Core.Helpers;
 
 namespace SimpQ.SqlServer.Queries.ClauseBuilders;
 
@@ -17,7 +19,8 @@ namespace SimpQ.SqlServer.Queries.ClauseBuilders;
 /// <param name="validOperator">The validator for checking if an operator is valid for a property type.</param>
 /// <param name="simpQOperator">The canonical SimpQ operator keywords used in input filters.</param>
 /// <param name="handlerResolver">Resolves the correct handler based on the filter operator.</param>
-public class WhereClauseBuilder(IOptions<SimpQOptions> options, ValidOperator validOperator, SimpQOperator simpQOperator, WhereOperatorHandlerResolver handlerResolver) {
+/// <param name="configurationRegistry">Optional configuration registry for fluent configurations.</param>
+public class WhereClauseBuilder(IOptions<SimpQOptions> options, ValidOperator validOperator, SimpQOperator simpQOperator, WhereOperatorHandlerResolver handlerResolver, EntityConfigurationRegistry? configurationRegistry = null) {
     private readonly byte _maxNestingLevel = options.Value.MaxFilterNestingLevel;
 
     /// <summary>
@@ -68,7 +71,7 @@ public class WhereClauseBuilder(IOptions<SimpQOptions> options, ValidOperator va
     /// <returns>A <see cref="WhereClause"/> containing the SQL and parameters.</returns>
     /// <exception cref="InvalidOperationException">Thrown if keyset columns are also used in the filter group.</exception>
     private WhereClause GetKeysetClause<TEntity>(FilterGroup? filterGroup, KeysetFilter keysetFilter) where TEntity : IReportEntity {
-        var keysetColumns = QueryHelper.GetOrderedKeysetColumns<TEntity>()
+        var keysetColumns = QueryHelperExtensions.GetOrderedKeysetColumns<TEntity>(configurationRegistry)
             .Select(c => c.PropertyName)
             .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
@@ -131,7 +134,7 @@ public class WhereClauseBuilder(IOptions<SimpQOptions> options, ValidOperator va
     /// <param name="level">Current nesting level for validation.</param>
     /// <returns>A valid SQL condition string or empty.</returns>
     private string BuildClause<TEntity>(IFilter filter, ParameterContext parameterContext, int level) where TEntity : IReportEntity {
-        var allowedFilters = QueryHelper.GetAllowedColumnsToFilter<TEntity>();
+        var allowedFilters = QueryHelperExtensions.GetAllowedColumnsToFilter<TEntity>(configurationRegistry);
 
         if (filter is FilterGroup subgroup)
             return $"({BuildClauseGroup<TEntity>(subgroup, parameterContext, level + 1)})";
@@ -163,7 +166,7 @@ public class WhereClauseBuilder(IOptions<SimpQOptions> options, ValidOperator va
             return string.Empty;
 
         var @operator = keysetFilter.IsDescending ? simpQOperator.LessThan : simpQOperator.GreaterThan;
-        var columns = QueryHelper.GetOrderedKeysetColumns<TEntity>();
+        var columns = QueryHelperExtensions.GetOrderedKeysetColumns<TEntity>(configurationRegistry);
         var conditions = new List<string>();
 
         for (var i = 0; i < columns.Count; i++) {

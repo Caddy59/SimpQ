@@ -1,5 +1,6 @@
 ﻿using SimpQ.SqlServer.Models;
 using SimpQ.SqlServer.Queries.ClauseBuilders;
+using SimpQ.Core.Configuration;
 
 namespace SimpQ.SqlServer.Queries;
 
@@ -9,7 +10,8 @@ namespace SimpQ.SqlServer.Queries;
 /// </summary>
 /// <param name="whereClauseBuilder">Builds the WHERE clause based on filters and keyset pagination.</param>
 /// <param name="orderClauseBuilder">Builds the ORDER BY clause based on user or default sort rules.</param>
-public class SqlServerQueryDefinitionFactory(WhereClauseBuilder whereClauseBuilder, OrderClauseBuilder orderClauseBuilder) : IQueryDefinitionFactory {
+/// <param name="configurationRegistry">Optional configuration registry for fluent configurations.</param>
+public class SqlServerQueryDefinitionFactory(WhereClauseBuilder whereClauseBuilder, OrderClauseBuilder orderClauseBuilder, EntityConfigurationRegistry? configurationRegistry = null) : IQueryDefinitionFactory {
     /// <inheritdoc/>
     public QueryDefinition BuildQueryDefinition<TEntity>(string rawQuery, string rawInitSql, QueryParams queryParams) where TEntity : IReportEntity, new() {
         var input = new QueryDefinitionInput(rawQuery, rawInitSql, queryParams.Select, queryParams.Filters, queryParams.Order);
@@ -54,7 +56,7 @@ public class SqlServerQueryDefinitionFactory(WhereClauseBuilder whereClauseBuild
     /// A fully composed <see cref="QueryDefinition"/> representing the SQL query and its parameter collection.
     /// </returns>
     private QueryDefinition BuildQueryDefinitionInternal<TEntity>(QueryDefinitionInput input) where TEntity : IReportEntity, new() {
-        var selectClause = SelectClauseBuilder.Build<TEntity>(input.Select, input.RawQuery);
+        var selectClause = SelectClauseBuilder.Build<TEntity>(input.Select, input.RawQuery, configurationRegistry);
         var whereClause = whereClauseBuilder.Build<TEntity>(input.Filters, input.KeysetFilter, out var parameters);
         var orderByClause = orderClauseBuilder.Build<TEntity>(input.Order, input.KeysetFilter);
         

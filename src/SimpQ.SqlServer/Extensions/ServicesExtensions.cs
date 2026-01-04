@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using SimpQ.SqlServer.Queries.ClauseBuilders;
 using SimpQ.SqlServer.Queries.OperatorHandlers;
 using SimpQ.Core.Options;
+using SimpQ.Core.Configuration;
 
 namespace SimpQ.SqlServer.Extensions;
 
@@ -25,6 +26,8 @@ public static class ServicesExtensions {
         if (configureOptions is not null)
             services.Configure(configureOptions);
 
+        services.AddSingleton<EntityConfigurationRegistry>();
+
         services.AddSingleton<ValidOperator>()
             .AddSingleton<SimpQOperator>()
             .AddSingleton<SqlServerQueryOperator>()
@@ -34,7 +37,11 @@ public static class ServicesExtensions {
             .AddWhereOperatorHandlers();
 
         services.AddScoped<IQueryDefinitionFactory, SqlServerQueryDefinitionFactory>()
-            .AddScoped<IReportQueryRaw, SqlServerReportQueryRaw>(s => new SqlServerReportQueryRaw(s.GetRequiredService<ILogger<SqlServerReportQueryRaw>>(), connectionString, s.GetRequiredService<IQueryDefinitionFactory>()));
+            .AddScoped<IReportQueryRaw, SqlServerReportQueryRaw>(s => new SqlServerReportQueryRaw(
+                s.GetRequiredService<ILogger<SqlServerReportQueryRaw>>(), 
+                connectionString, 
+                s.GetRequiredService<IQueryDefinitionFactory>(), 
+                s.GetService<EntityConfigurationRegistry>()));
 
         return services;
     }
