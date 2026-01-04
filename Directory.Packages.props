@@ -1,19 +1,16 @@
 <Project>
-	
   <ItemGroup>
-		<PackageVersion Include="Microsoft.Data.SqlClient" Version="6.0.2" />
-		<PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.6" />
-		<PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.6" />
-		<PackageVersion Include="Microsoft.Extensions.Options" Version="9.0.6" />
-		<PackageVersion Include="Swashbuckle.AspNetCore" Version="9.0.1" />
-		
-		<!--BEGIN packages for testing-->
-		<PackageVersion Include="coverlet.collector" Version="6.0.4" />
-		<PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
-		<PackageVersion Include="Moq" Version="4.20.72" />
-		<PackageVersion Include="xunit" Version="2.9.3" />
-		<PackageVersion Include="xunit.runner.visualstudio" Version="3.1.1" />
-		<!--END packages for testing-->
+    <PackageVersion Include="Microsoft.Data.SqlClient" Version="6.1.3" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.1" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.1" />
+    <PackageVersion Include="Microsoft.Extensions.Options" Version="10.0.1" />
+    <PackageVersion Include="Swashbuckle.AspNetCore" Version="10.1.0" />
+    <!--BEGIN packages for testing-->
+    <PackageVersion Include="coverlet.collector" Version="6.0.4" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
+    <PackageVersion Include="Moq" Version="4.20.72" />
+    <PackageVersion Include="xunit" Version="2.9.3" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.5" />
+    <!--END packages for testing-->
   </ItemGroup>
-	
 </Project>
