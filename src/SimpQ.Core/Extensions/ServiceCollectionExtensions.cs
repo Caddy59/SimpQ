@@ -10,20 +10,17 @@ namespace SimpQ.Core.Extensions;
 /// </summary>
 public static class ServiceCollectionExtensions {
     /// <summary>
-    /// Adds entity configuration services to the dependency injection container.
+    /// Adds report entity configuration services to the dependency injection container.
     /// </summary>
     /// <param name="services">The service collection.</param>
     /// <param name="configureAction">Optional action to configure entity types.</param>
     /// <returns>The service collection for method chaining.</returns>
-    public static IServiceCollection AddEntityConfiguration(this IServiceCollection services, Action<EntityConfigurationBuilder>? configureAction = null) {
-        services.AddSingleton<EntityConfigurationRegistry>(provider => {
-            var registry = new EntityConfigurationRegistry();
-            
-            // Apply all registered configuration actions
-            var configActions = provider.GetServices<Action<EntityConfigurationRegistry>>();
-            foreach (var action in configActions) {
+    public static IServiceCollection AddReportEntityConfiguration(this IServiceCollection services, Action<EntityConfigurationBuilder>? configureAction = null) {
+        services.AddSingleton<ReportEntityConfigurationRegistry>(provider => {
+            var registry = new ReportEntityConfigurationRegistry();
+            var configActions = provider.GetServices<Action<ReportEntityConfigurationRegistry>>();
+            foreach (var action in configActions)
                 action(registry);
-            }
             
             return registry;
         });
@@ -43,7 +40,7 @@ public static class ServiceCollectionExtensions {
     /// <param name="assembly">The assembly to scan for entity configurations.</param>
     /// <returns>The service collection for method chaining.</returns>
     public static IServiceCollection AddEntityConfigurationsFromAssembly(this IServiceCollection services, Assembly assembly) =>
-        services.AddEntityConfiguration(builder => builder.ApplyConfigurationsFromAssembly(assembly));
+        services.AddReportEntityConfiguration(builder => builder.ApplyConfigurationsFromAssembly(assembly));
 
     /// <summary>
     /// Registers entity configurations from the calling assembly.
@@ -65,10 +62,10 @@ public class EntityConfigurationBuilder(IServiceCollection services) {
     /// <typeparam name="TEntity">The entity type to configure.</typeparam>
     /// <param name="configuration">The configuration instance.</param>
     /// <returns>The builder for method chaining.</returns>
-    public EntityConfigurationBuilder ApplyConfiguration<TEntity>(IEntityTypeConfiguration<TEntity> configuration) 
+    public EntityConfigurationBuilder ApplyConfiguration<TEntity>(IReportEntityTypeConfiguration<TEntity> configuration) 
         where TEntity : class, IReportEntity {
         services.AddSingleton(configuration);
-        services.AddSingleton<Action<EntityConfigurationRegistry>>(registry => registry.Register(configuration));
+        services.AddSingleton<Action<ReportEntityConfigurationRegistry>>(registry => registry.Register(configuration));
         return this;
     }
 
@@ -78,7 +75,7 @@ public class EntityConfigurationBuilder(IServiceCollection services) {
     /// <param name="assembly">The assembly to scan for configurations.</param>
     /// <returns>The builder for method chaining.</returns>
     public EntityConfigurationBuilder ApplyConfigurationsFromAssembly(Assembly assembly) {
-        services.AddSingleton<Action<EntityConfigurationRegistry>>(registry => registry.RegisterFromAssembly(assembly));
+        services.AddSingleton<Action<ReportEntityConfigurationRegistry>>(registry => registry.RegisterFromAssembly(assembly));
         return this;
     }
 }

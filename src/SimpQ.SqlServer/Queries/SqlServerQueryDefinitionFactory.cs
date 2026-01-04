@@ -11,7 +11,7 @@ namespace SimpQ.SqlServer.Queries;
 /// <param name="whereClauseBuilder">Builds the WHERE clause based on filters and keyset pagination.</param>
 /// <param name="orderClauseBuilder">Builds the ORDER BY clause based on user or default sort rules.</param>
 /// <param name="configurationRegistry">Optional configuration registry for fluent configurations.</param>
-public class SqlServerQueryDefinitionFactory(WhereClauseBuilder whereClauseBuilder, OrderClauseBuilder orderClauseBuilder, EntityConfigurationRegistry? configurationRegistry = null) : IQueryDefinitionFactory {
+public class SqlServerQueryDefinitionFactory(WhereClauseBuilder whereClauseBuilder, OrderClauseBuilder orderClauseBuilder, ReportEntityConfigurationRegistry? configurationRegistry = null) : IQueryDefinitionFactory {
     /// <inheritdoc/>
     public QueryDefinition BuildQueryDefinition<TEntity>(string rawQuery, string rawInitSql, QueryParams queryParams) where TEntity : IReportEntity, new() {
         var input = new QueryDefinitionInput(rawQuery, rawInitSql, queryParams.Select, queryParams.Filters, queryParams.Order);

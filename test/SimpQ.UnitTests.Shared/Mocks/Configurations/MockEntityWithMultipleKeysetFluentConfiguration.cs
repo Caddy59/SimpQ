@@ -8,7 +8,7 @@ namespace SimpQ.UnitTests.Shared.Mocks.Configurations;
 /// <summary>
 /// Fluent configuration with multiple keyset pagination keys.
 /// </summary>
-public class MockEntityWithMultipleKeysetFluentConfiguration : IEntityTypeConfiguration<MockEntityFluentOnly> {
+public class MockEntityWithMultipleKeysetFluentConfiguration : IReportEntityTypeConfiguration<MockEntityFluentOnly> {
     public void Configure(EntityTypeBuilder<MockEntityFluentOnly> builder) {
         builder.Property(x => x.Id)
             .HasColumn((int)SqlDbType.Int)

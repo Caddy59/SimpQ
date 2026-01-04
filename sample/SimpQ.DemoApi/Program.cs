@@ -20,7 +20,7 @@ builder.Services.AddSimpQSqlServer(connectionString);
 builder.Services.Configure<SimpQOptions>(
     builder.Configuration.GetSection("SimpQ"));
 
-builder.Services.AddEntityConfiguration(config => {
+builder.Services.AddReportEntityConfiguration(config => {
     config.ApplyConfiguration(new InvoiceConfiguration())
           .ApplyConfiguration(new InvoiceFluentOnlyConfiguration());
 });

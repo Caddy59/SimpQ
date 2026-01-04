@@ -18,7 +18,7 @@ public static class QueryHelper {
     /// <typeparam name="TEntity">The entity type to inspect.</typeparam>
     /// <param name="configurationRegistry">Optional configuration registry for fluent configurations.</param>
     /// <returns>A frozen set of columns representing mapped properties.</returns>
-    public static FrozenSet<Column> GetColumns<TEntity>(EntityConfigurationRegistry? configurationRegistry = null) 
+    public static FrozenSet<Column> GetColumns<TEntity>(ReportEntityConfigurationRegistry? configurationRegistry = null) 
         where TEntity : IReportEntity {
         var properties = typeof(TEntity).GetProperties(BindingFlags.Public | BindingFlags.Instance);
         var columns = new List<Column>();
@@ -47,7 +47,7 @@ public static class QueryHelper {
     /// <typeparam name="TEntity">The entity type to inspect.</typeparam>
     /// <param name="configurationRegistry">Optional configuration registry for fluent configurations.</param>
     /// <returns>A frozen set of filterable columns.</returns>
-    public static FrozenSet<Column> GetAllowedColumnsToFilter<TEntity>(EntityConfigurationRegistry? configurationRegistry = null) 
+    public static FrozenSet<Column> GetAllowedColumnsToFilter<TEntity>(ReportEntityConfigurationRegistry? configurationRegistry = null) 
         where TEntity : IReportEntity =>
         GetAllowedFields<TEntity, AllowedToFilterAttribute>(configurationRegistry, config => config.AllowedToFilter);
 
@@ -57,7 +57,7 @@ public static class QueryHelper {
     /// <typeparam name="TEntity">The entity type to inspect.</typeparam>
     /// <param name="configurationRegistry">Optional configuration registry for fluent configurations.</param>
     /// <returns>A frozen set of orderable columns.</returns>
-    public static FrozenSet<Column> GetAllowedColumnsToOrder<TEntity>(EntityConfigurationRegistry? configurationRegistry = null) 
+    public static FrozenSet<Column> GetAllowedColumnsToOrder<TEntity>(ReportEntityConfigurationRegistry? configurationRegistry = null) 
         where TEntity : IReportEntity =>
         GetAllowedFields<TEntity, AllowedToOrderAttribute>(configurationRegistry, config => config.AllowedToOrder);
 
@@ -68,7 +68,7 @@ public static class QueryHelper {
     /// <param name="configurationRegistry">Optional configuration registry for fluent configurations.</param>
     /// <returns>A read-only collection of ColumnOrder entries.</returns>
     /// <exception cref="InvalidOperationException">Thrown if no default ordering is found or if duplicate priorities exist.</exception>
-    public static IReadOnlyCollection<ColumnOrder> GetDefaultColumnsToOrder<TEntity>(EntityConfigurationRegistry? configurationRegistry = null) 
+    public static IReadOnlyCollection<ColumnOrder> GetDefaultColumnsToOrder<TEntity>(ReportEntityConfigurationRegistry? configurationRegistry = null) 
         where TEntity : IReportEntity {
         var properties = typeof(TEntity).GetProperties(BindingFlags.Public | BindingFlags.Instance);
         var defaultOrders = new List<(string ColumnName, int Priority, Abstractions.Enums.OrderDirection Direction)>();
@@ -119,7 +119,7 @@ public static class QueryHelper {
     /// <param name="configurationRegistry">Optional configuration registry for fluent configurations.</param>
     /// <returns>A read-only ordered collection of keyset pagination columns.</returns>
     /// <exception cref="InvalidOperationException">Thrown if no pagination keys are found or if duplicate priorities exist.</exception>
-    public static IReadOnlyCollection<Column> GetOrderedKeysetColumns<TEntity>(EntityConfigurationRegistry? configurationRegistry = null) 
+    public static IReadOnlyCollection<Column> GetOrderedKeysetColumns<TEntity>(ReportEntityConfigurationRegistry? configurationRegistry = null) 
         where TEntity : IReportEntity {
         var properties = typeof(TEntity).GetProperties(BindingFlags.Public | BindingFlags.Instance);
         var keysetColumns = new List<(Column Column, int Priority)>();
@@ -172,7 +172,7 @@ public static class QueryHelper {
     /// <param name="configurationRegistry">Optional configuration registry for fluent configurations.</param>
     /// <returns>A read-only list of keyset pagination properties.</returns>
     /// <exception cref="InvalidOperationException">Thrown if no pagination keys are found.</exception>
-    public static IReadOnlyCollection<PropertyInfo> GetOrderedKeysetProperties<TEntity>(EntityConfigurationRegistry? configurationRegistry = null) 
+    public static IReadOnlyCollection<PropertyInfo> GetOrderedKeysetProperties<TEntity>(ReportEntityConfigurationRegistry? configurationRegistry = null) 
         where TEntity : IReportEntity {
         var properties = typeof(TEntity).GetProperties(BindingFlags.Public | BindingFlags.Instance);
         var keysetProperties = new List<(PropertyInfo Property, int Priority)>();
@@ -214,7 +214,7 @@ public static class QueryHelper {
     /// <param name="fluentPredicate">Predicate to check if a property configuration meets the criteria.</param>
     /// <returns>A frozen set of matching columns.</returns>
     private static FrozenSet<Column> GetAllowedFields<TEntity, TAttribute>(
-        EntityConfigurationRegistry? configurationRegistry,
+        ReportEntityConfigurationRegistry? configurationRegistry,
         Func<PropertyConfiguration, bool> fluentPredicate) 
         where TEntity : IReportEntity 
         where TAttribute : Attribute {

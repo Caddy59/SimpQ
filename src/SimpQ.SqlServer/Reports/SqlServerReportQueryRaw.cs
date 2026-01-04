@@ -14,7 +14,7 @@ namespace SimpQ.SqlServer.Reports;
 /// <param name="connectionString">The SQL Server connection string used to establish the database connection.</param>
 /// <param name="queryBuilder">The query definition factory responsible for building SQL commands and parameters.</param>
 /// <param name="configurationRegistry">Optional configuration registry for fluent configurations.</param>
-public class SqlServerReportQueryRaw(ILogger<SqlServerReportQueryRaw> logger, string connectionString, IQueryDefinitionFactory queryBuilder, EntityConfigurationRegistry? configurationRegistry = null) : IReportQueryRaw {
+public class SqlServerReportQueryRaw(ILogger<SqlServerReportQueryRaw> logger, string connectionString, IQueryDefinitionFactory queryBuilder, ReportEntityConfigurationRegistry? configurationRegistry = null) : IReportQueryRaw {
     /// <inheritdoc/>
     public async Task<QueryResult<TEntity>> ExecuteQueryAsync<TEntity>(string rawQuery, QueryParams queryParams, int timeout = 30000, CancellationToken cancellationToken = default) where TEntity : IReportEntity, new() =>
         await ExecuteQueryAsync<TEntity>(rawQuery, string.Empty, queryParams, timeout, cancellationToken);
@@ -158,7 +158,7 @@ public class SqlServerReportQueryRaw(ILogger<SqlServerReportQueryRaw> logger, st
     /// A read-only dictionary containing the property names and values used as the keyset cursor,
     /// or <c>null</c> if the input collection is empty.
     /// </returns>
-    private static ReadOnlyDictionary<string, object?>? GetNext<TEntity>(IReadOnlyCollection<TEntity> entities, EntityConfigurationRegistry? configurationRegistry = null) where TEntity : IReportEntity, new() {
+    private static ReadOnlyDictionary<string, object?>? GetNext<TEntity>(IReadOnlyCollection<TEntity> entities, ReportEntityConfigurationRegistry? configurationRegistry = null) where TEntity : IReportEntity, new() {
         if (entities.Count == 0)
             return default;
 

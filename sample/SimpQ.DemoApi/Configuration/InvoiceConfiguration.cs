@@ -8,7 +8,7 @@ namespace SimpQ.DemoApi.Configuration;
 /// Fluent configuration for the Invoice entity as an alternative to attribute-based configuration.
 /// This demonstrates how to configure entity metadata without using attributes.
 /// </summary>
-public class InvoiceConfiguration : IEntityTypeConfiguration<Invoice> {
+public class InvoiceConfiguration : IReportEntityTypeConfiguration<Invoice> {
     public void Configure(EntityTypeBuilder<Invoice> builder) {
         builder.Property(x => x.Id)
             .HasColumn((int)SqlDbType.Int, "TransactionId")

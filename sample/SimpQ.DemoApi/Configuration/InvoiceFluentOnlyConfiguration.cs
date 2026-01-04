@@ -9,7 +9,7 @@ namespace SimpQ.DemoApi.Configuration;
 /// Fluent configuration for the InvoiceFluentOnly entity.
 /// This entity has no attributes and is configured entirely through fluent configuration.
 /// </summary>
-public class InvoiceFluentOnlyConfiguration : IEntityTypeConfiguration<InvoiceFluentOnly> {
+public class InvoiceFluentOnlyConfiguration : IReportEntityTypeConfiguration<InvoiceFluentOnly> {
     public void Configure(EntityTypeBuilder<InvoiceFluentOnly> builder) {
         builder.Property(x => x.Id)
             .HasColumn((int)SqlDbType.Int, "TransactionId")

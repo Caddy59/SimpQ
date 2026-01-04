@@ -26,7 +26,7 @@ public static class ServicesExtensions {
         if (configureOptions is not null)
             services.Configure(configureOptions);
 
-        services.AddSingleton<EntityConfigurationRegistry>();
+        services.AddSingleton<ReportEntityConfigurationRegistry>();
 
         services.AddSingleton<ValidOperator>()
             .AddSingleton<SimpQOperator>()
@@ -41,7 +41,7 @@ public static class ServicesExtensions {
                 s.GetRequiredService<ILogger<SqlServerReportQueryRaw>>(), 
                 connectionString, 
                 s.GetRequiredService<IQueryDefinitionFactory>(), 
-                s.GetService<EntityConfigurationRegistry>()));
+                s.GetService<ReportEntityConfigurationRegistry>()));
 
         return services;
     }

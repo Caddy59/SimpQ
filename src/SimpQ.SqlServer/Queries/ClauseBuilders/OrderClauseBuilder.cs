@@ -12,7 +12,7 @@ namespace SimpQ.SqlServer.Queries.ClauseBuilders;
 /// An instance of <see cref="SqlServerQueryOperator"/> used to resolve SQL ordering directions.
 /// </param>
 /// <param name="configurationRegistry">Optional configuration registry for fluent configurations.</param>
-public class OrderClauseBuilder(SqlServerQueryOperator sqlServerQueryOperator, EntityConfigurationRegistry? configurationRegistry = null)  {
+public class OrderClauseBuilder(SqlServerQueryOperator sqlServerQueryOperator, ReportEntityConfigurationRegistry? configurationRegistry = null)  {
     private const string Separator = ",";
 
     /// <summary>

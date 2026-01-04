@@ -4,11 +4,11 @@ using SimpQ.UnitTests.Shared.Mocks.Entities;
 
 namespace SimpQ.Core.UnitTests.Configuration;
 
-public class EntityConfigurationRegistryTests {
+public class ReportEntityConfigurationRegistryTests {
     [Fact]
     public void Register_ShouldStoreConfiguration() {
         // Arrange
-        var registry = new EntityConfigurationRegistry();
+        var registry = new ReportEntityConfigurationRegistry();
         var configuration = new MockEntityFluentOnlyConfiguration();
 
         // Act
@@ -21,7 +21,7 @@ public class EntityConfigurationRegistryTests {
     [Fact]
     public void GetConfiguration_ShouldReturnStoredConfiguration() {
         // Arrange
-        var registry = new EntityConfigurationRegistry();
+        var registry = new ReportEntityConfigurationRegistry();
         var configuration = new MockEntityFluentOnlyConfiguration();
         registry.Register(configuration);
 
@@ -39,7 +39,7 @@ public class EntityConfigurationRegistryTests {
     [Fact]
     public void GetConfiguration_ShouldReturnNull_WhenConfigurationNotRegistered() {
         // Arrange
-        var registry = new EntityConfigurationRegistry();
+        var registry = new ReportEntityConfigurationRegistry();
 
         // Act
         var result = registry.GetConfiguration(typeof(MockEntity));
@@ -51,7 +51,7 @@ public class EntityConfigurationRegistryTests {
     [Fact]
     public void HasConfiguration_ShouldReturnFalse_WhenConfigurationNotRegistered() {
         // Arrange
-        var registry = new EntityConfigurationRegistry();
+        var registry = new ReportEntityConfigurationRegistry();
 
         // Act
         var result = registry.HasConfiguration(typeof(MockEntity));
@@ -63,7 +63,7 @@ public class EntityConfigurationRegistryTests {
     [Fact]
     public void RegisterFromAssembly_ShouldRegisterAllConfigurations() {
         // Arrange
-        var registry = new EntityConfigurationRegistry();
+        var registry = new ReportEntityConfigurationRegistry();
         var assembly = typeof(MockEntityFluentOnlyConfiguration).Assembly;
 
         // Act
@@ -76,7 +76,7 @@ public class EntityConfigurationRegistryTests {
     [Fact]
     public void GetConfiguration_ShouldReturnCorrectPropertyConfiguration() {
         // Arrange
-        var registry = new EntityConfigurationRegistry();
+        var registry = new ReportEntityConfigurationRegistry();
         var configuration = new MockEntityFluentOnlyConfiguration();
         registry.Register(configuration);
 

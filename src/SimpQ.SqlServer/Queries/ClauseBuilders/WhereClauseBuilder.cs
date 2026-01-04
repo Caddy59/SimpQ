@@ -20,7 +20,7 @@ namespace SimpQ.SqlServer.Queries.ClauseBuilders;
 /// <param name="simpQOperator">The canonical SimpQ operator keywords used in input filters.</param>
 /// <param name="handlerResolver">Resolves the correct handler based on the filter operator.</param>
 /// <param name="configurationRegistry">Optional configuration registry for fluent configurations.</param>
-public class WhereClauseBuilder(IOptions<SimpQOptions> options, ValidOperator validOperator, SimpQOperator simpQOperator, WhereOperatorHandlerResolver handlerResolver, EntityConfigurationRegistry? configurationRegistry = null) {
+public class WhereClauseBuilder(IOptions<SimpQOptions> options, ValidOperator validOperator, SimpQOperator simpQOperator, WhereOperatorHandlerResolver handlerResolver, ReportEntityConfigurationRegistry? configurationRegistry = null) {
     private readonly byte _maxNestingLevel = options.Value.MaxFilterNestingLevel;
 
     /// <summary>

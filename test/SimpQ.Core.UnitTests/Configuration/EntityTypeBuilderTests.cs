@@ -37,7 +37,7 @@ public class EntityTypeBuilderTests {
         builder.Property(x => x.Name).HasColumn((int)SqlDbType.VarChar);
 
         // Assert - Verify through EntityConfigurationRegistry
-        var registry = new EntityConfigurationRegistry();
+        var registry = new ReportEntityConfigurationRegistry();
         var testConfig = new TestEntityTypeConfiguration(builder);
         registry.Register(testConfig);
         var result = registry.GetConfiguration(typeof(MockEntityFluentOnly));
@@ -58,7 +58,7 @@ public class EntityTypeBuilderTests {
         builder.Property(x => x.Id).AllowedToFilter();
 
         // Assert - Verify through EntityConfigurationRegistry
-        var registry = new EntityConfigurationRegistry();
+        var registry = new ReportEntityConfigurationRegistry();
         var testConfig = new TestEntityTypeConfiguration(builder);
         registry.Register(testConfig);
         var result = registry.GetConfiguration(typeof(MockEntityFluentOnly));
@@ -69,7 +69,7 @@ public class EntityTypeBuilderTests {
     }
 
     // Helper class to test EntityTypeBuilder
-    private class TestEntityTypeConfiguration : IEntityTypeConfiguration<MockEntityFluentOnly> {
+    private class TestEntityTypeConfiguration : IReportEntityTypeConfiguration<MockEntityFluentOnly> {
         private readonly EntityTypeBuilder<MockEntityFluentOnly> _existingBuilder;
 
         public TestEntityTypeConfiguration(EntityTypeBuilder<MockEntityFluentOnly> existingBuilder) {

@@ -8,7 +8,7 @@ namespace SimpQ.UnitTests.Shared.Mocks.Configurations;
 /// <summary>
 /// Fluent configuration for MockEntityFluentOnly.
 /// </summary>
-public class MockEntityFluentOnlyConfiguration : IEntityTypeConfiguration<MockEntityFluentOnly> {
+public class MockEntityFluentOnlyConfiguration : IReportEntityTypeConfiguration<MockEntityFluentOnly> {
     public void Configure(EntityTypeBuilder<MockEntityFluentOnly> builder) {
         builder.Property(x => x.Id)
             .HasColumn((int)SqlDbType.Int)

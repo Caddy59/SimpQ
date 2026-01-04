@@ -5,9 +5,9 @@ using System.Reflection;
 namespace SimpQ.Core.Configuration;
 
 /// <summary>
-/// Registry for storing and retrieving entity configurations.
+/// Registry for storing and retrieving report entity configurations.
 /// </summary>
-public class EntityConfigurationRegistry {
+public class ReportEntityConfigurationRegistry {
     private readonly ConcurrentDictionary<Type, IReadOnlyDictionary<string, PropertyConfiguration>> _configurations = new();
 
     /// <summary>
@@ -15,7 +15,7 @@ public class EntityConfigurationRegistry {
     /// </summary>
     /// <typeparam name="TEntity">The entity type to register.</typeparam>
     /// <param name="configuration">The configuration instance.</param>
-    public void Register<TEntity>(IEntityTypeConfiguration<TEntity> configuration) where TEntity : class, IReportEntity {
+    public void Register<TEntity>(IReportEntityTypeConfiguration<TEntity> configuration) where TEntity : class, IReportEntity {
         var builder = new EntityTypeBuilder<TEntity>();
         configuration.Configure(builder);
         _configurations[typeof(TEntity)] = builder.GetPropertyConfigurations();
@@ -29,12 +29,12 @@ public class EntityConfigurationRegistry {
         var configurationTypes = assembly.GetTypes()
             .Where(t => t.IsClass && !t.IsAbstract)
             .Where(t => t.GetInterfaces().Any(i => 
-                i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IEntityTypeConfiguration<>)))
+                i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IReportEntityTypeConfiguration<>)))
             .ToList();
 
         foreach (var configurationType in configurationTypes) {
             var interfaceType = configurationType.GetInterfaces()
-                .First(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IEntityTypeConfiguration<>));
+                .First(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IReportEntityTypeConfiguration<>));
 
             var entityType = interfaceType.GetGenericArguments()[0];
             var configuration = Activator.CreateInstance(configurationType);

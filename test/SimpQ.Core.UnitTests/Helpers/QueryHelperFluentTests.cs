@@ -9,8 +9,8 @@ namespace SimpQ.Core.UnitTests.Helpers;
 /// Tests for QueryHelper with fluent configuration support.
 /// </summary>
 public class QueryHelperFluentTests {
-    private EntityConfigurationRegistry CreateRegistry() {
-        var registry = new EntityConfigurationRegistry();
+    private ReportEntityConfigurationRegistry CreateRegistry() {
+        var registry = new ReportEntityConfigurationRegistry();
         registry.Register(new MockEntityFluentOnlyConfiguration());
         return registry;
     }
@@ -89,7 +89,7 @@ public class QueryHelperFluentTests {
     [Fact]
     public void GetDefaultColumnsToOrder_ShouldThrowException_WhenNoDefaultOrderInFluentConfiguration() {
         // Arrange
-        var registry = new EntityConfigurationRegistry();
+        var registry = new ReportEntityConfigurationRegistry();
 
         // Act & Assert
         var exception = Assert.Throws<InvalidOperationException>(() => QueryHelper.GetDefaultColumnsToOrder<MockEntityFluentOnly>(registry));
@@ -99,7 +99,7 @@ public class QueryHelperFluentTests {
     [Fact]
     public void GetOrderedKeysetColumns_ShouldReturnKeysetColumnsFromFluentConfiguration() {
         // Arrange
-        var registry = new EntityConfigurationRegistry();
+        var registry = new ReportEntityConfigurationRegistry();
         registry.Register(new MockEntityWithMultipleKeysetFluentConfiguration());
 
         // Act
@@ -115,7 +115,7 @@ public class QueryHelperFluentTests {
     [Fact]
     public void GetOrderedKeysetColumns_ShouldThrowException_WhenNoKeysetColumnsInFluentConfiguration() {
         // Arrange
-        var registry = new EntityConfigurationRegistry();
+        var registry = new ReportEntityConfigurationRegistry();
 
         // Act & Assert
         var exception = Assert.Throws<InvalidOperationException>(() => QueryHelper.GetOrderedKeysetColumns<MockEntityFluentOnly>(registry));
@@ -125,7 +125,7 @@ public class QueryHelperFluentTests {
     [Fact]
     public void GetOrderedKeysetProperties_ShouldReturnKeysetPropertiesFromFluentConfiguration() {
         // Arrange
-        var registry = new EntityConfigurationRegistry();
+        var registry = new ReportEntityConfigurationRegistry();
         registry.Register(new MockEntityWithMultipleKeysetFluentConfiguration());
 
         // Act
@@ -141,7 +141,7 @@ public class QueryHelperFluentTests {
     [Fact]
     public void GetOrderedKeysetProperties_ShouldThrowException_WhenNoKeysetPropertiesInFluentConfiguration() {
         // Arrange
-        var registry = new EntityConfigurationRegistry();
+        var registry = new ReportEntityConfigurationRegistry();
 
         // Act & Assert
         var exception = Assert.Throws<InvalidOperationException>(() => QueryHelper.GetOrderedKeysetProperties<MockEntityFluentOnly>(registry));
