@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\SimpQ.Abstractions\SimpQ.Abstractions.csproj" />
+    <ProjectReference Include="..\..\src\SimpQ.Core\SimpQ.Core.csproj" />
   </ItemGroup>
 
 </Project>

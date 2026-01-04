@@ -52,14 +52,14 @@ public class QueryHelperTests {
     [Fact]
     public void GetDefaultColumnsToOrder_ShouldThrowException_WhenNoDefaultOrderColumnExists() {
         // Act & Assert
-        var exception = Assert.Throws<InvalidOperationException>(QueryHelper.GetDefaultColumnsToOrder<MockEntityWithoutDefaultOrder>);
+        var exception = Assert.Throws<InvalidOperationException>(() => QueryHelper.GetDefaultColumnsToOrder<MockEntityWithoutDefaultOrder>());
         Assert.Equal($"No default order columns found for {nameof(MockEntityWithoutDefaultOrder)}.", exception.Message);
     }
 
     [Fact]
     public void GetDefaultColumnsToOrder_ShouldThrowException_WhenConflictingDefaultOrderColumnsExist() {
         // Act & Assert
-        var exception = Assert.Throws<InvalidOperationException>(QueryHelper.GetDefaultColumnsToOrder<MockEntityWithConflictingDefaultOrder>);
+        var exception = Assert.Throws<InvalidOperationException>(() => QueryHelper.GetDefaultColumnsToOrder<MockEntityWithConflictingDefaultOrder>());
         Assert.StartsWith($"Duplicated priorities found for {nameof(MockEntityWithConflictingDefaultOrder)}:", exception.Message);
     }
 
@@ -78,14 +78,14 @@ public class QueryHelperTests {
     [Fact]
     public void GetOrderedKeysetColumns_ShouldThrowException_WhenNoKeysetColumnsExist() {
         // Act & Assert
-        var exception = Assert.Throws<InvalidOperationException>(QueryHelper.GetOrderedKeysetColumns<MockEntityWithoutKeysetKey>);
+        var exception = Assert.Throws<InvalidOperationException>(() => QueryHelper.GetOrderedKeysetColumns<MockEntityWithoutKeysetKey>());
         Assert.Equal($"No keyset pagination key columns found for {nameof(MockEntityWithoutKeysetKey)}.", exception.Message);
     }
 
     [Fact]
     public void GetOrderedKeysetColumns_ShouldThrowException_WhenConflictingKeysetPrioritiesExist() {
         // Act & Assert
-        var exception = Assert.Throws<InvalidOperationException>(QueryHelper.GetOrderedKeysetColumns<MockEntityWithConflictingKeysetKey>);
+        var exception = Assert.Throws<InvalidOperationException>(() => QueryHelper.GetOrderedKeysetColumns<MockEntityWithConflictingKeysetKey>());
         Assert.StartsWith($"Duplicated keyset pagination priorities found for {nameof(MockEntityWithConflictingKeysetKey)}:", exception.Message);
     }
 
@@ -104,7 +104,7 @@ public class QueryHelperTests {
     [Fact]
     public void GetOrderedKeysetProperties_ShouldThrowException_WhenNoKeysetPropertiesExist() {
         // Act & Assert
-        var exception = Assert.Throws<InvalidOperationException>(QueryHelper.GetOrderedKeysetProperties<MockEntityWithoutKeysetKey>);
+        var exception = Assert.Throws<InvalidOperationException>(() => QueryHelper.GetOrderedKeysetProperties<MockEntityWithoutKeysetKey>());
         Assert.Equal($"No keyset pagination key columns found for {nameof(MockEntityWithoutKeysetKey)}.", exception.Message);
     }
 }
