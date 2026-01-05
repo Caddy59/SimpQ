@@ -1,0 +1,22 @@
+<Solution>
+  <Folder Name="/Elementos de la solución/">
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="LICENSE" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/sample/">
+    <Project Path="sample/SimpQ.DemoApi/SimpQ.DemoApi.csproj" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/SimpQ.Abstractions/SimpQ.Abstractions.csproj" />
+    <Project Path="src/SimpQ.Core/SimpQ.Core.csproj" />
+    <Project Path="src/SimpQ.SqlServer/SimpQ.SqlServer.csproj" />
+  </Folder>
+  <Folder Name="/test/">
+    <Project Path="test/SimpQ.Abstractions.UnitTests/SimpQ.Abstractions.UnitTests.csproj" />
+    <Project Path="test/SimpQ.Core.UnitTests/SimpQ.Core.UnitTests.csproj" />
+    <Project Path="test/SimpQ.SqlServer.UnitTests/SimpQ.SqlServer.UnitTests.csproj" />
+    <Project Path="test/SimpQ.UnitTests.Shared/SimpQ.UnitTests.Shared.csproj" />
+  </Folder>
+</Solution>
