@@ -1,7 +1,7 @@
 <Project>
 
 	<PropertyGroup>
-		<Version>1.1.0</Version>
+		<Version>1.2.2</Version>
 		<Authors>Caddy59 (Cristián Ulloa Besserer)</Authors>
 		<PackageTags>SQL; Query; Database</PackageTags>
 		<Copyright>Copyright © 2025 Caddy59 (Cristián Ulloa Besserer)</Copyright>
